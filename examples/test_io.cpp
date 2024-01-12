@@ -18,7 +18,7 @@ using std::cerr;
 using namespace dami;
 
 int
-main(size_t argc, const char** argv)
+main(int argc, const char** argv)
 {
   ID3D_INIT_DOUT();
   ID3D_INIT_WARNING();

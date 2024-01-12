@@ -17,8 +17,8 @@
 /* This is the template section */
 
 /* These are standard for all packages using Automake */
-#undef PACKAGE
-#undef VERSION
+#define PACKAGE "@CMAKE_PROJECT_NAME@"
+#define VERSION "@CMAKE_PROJECT_VERSION@"
 
 /* And now the rest of the boys */
 #undef CXX_HAS_BUGGY_FOR_LOOPS
@@ -41,17 +41,17 @@
  * macros will be made available in the library via constants, functions,
  * or static methods.
  */
-#undef HAVE_ZLIB
-#undef HAVE_GETOPT_LONG
-#undef _ID3LIB_NAME
-#undef _ID3LIB_VERSION
-#undef _ID3LIB_FULLNAME
-#undef _ID3LIB_MAJOR_VERSION
-#undef _ID3LIB_MINOR_VERSION
-#undef _ID3LIB_PATCH_VERSION
-#undef _ID3LIB_INTERFACE_AGE
-#undef _ID3LIB_BINARY_AGE
-#undef _ID3_COMPILED_WITH_DEBUGGING
+#define HAVE_ZLIB @zlib_FOUND@
+#define HAVE_GETOPT_LONG @HAVE_GETOPT_LONG@
+#define _ID3LIB_NAME "@CMAKE_PROJECT_NAME@"
+#define _ID3LIB_VERSION "@CMAKE_PROJECT_VERSION@"
+#define _ID3LIB_FULLNAME "@CMAKE_PROJECT_NAME@"
+#define _ID3LIB_MAJOR_VERSION @CMAKE_PROJECT_VERSION_MAJOR@
+#define _ID3LIB_MINOR_VERSION @CMAKE_PROJECT_VERSION_MINOR@
+#define _ID3LIB_PATCH_VERSION @CMAKE_PROJECT_VERSION_PATCH@
+#define _ID3LIB_INTERFACE_AGE @ID3LIB_INTERFACE_AGE@
+#define _ID3LIB_BINARY_AGE @ID3LIB_BINARY_AGE@
+#define _ID3_COMPILED_WITH_DEBUGGING "@ID3LIB_COMPILE_DEBUG@"
 /* */
 
 
@@ -80,10 +80,10 @@
 #undef HAVE_FSTREAM_H
 
 /* Define if you have the `getopt_long' function. */
-#undef HAVE_GETOPT_LONG
+#cmakedefine HAVE_GETOPT_LONG @HAVE_GETOPT_LONG@
 
 /* Define if you have the <iconv.h> header file. */
-#undef HAVE_ICONV_H
+#cmakedefine HAVE_ICONV_H @HAVE_ICONV_H@
 
 /* Define if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
@@ -104,7 +104,7 @@
 #undef HAVE_LIBCW_SYS_H
 
 /* Define if you have the <bitset> header file. */
-#undef HAVE_BITSET
+#cmakedefine HAVE_BITSET
 
 /* Define if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
@@ -128,10 +128,10 @@
 #undef HAVE_STRING_H
 
 /* Define if you have the <sys/param.h> header file. */
-#undef HAVE_SYS_PARAM_H
+#cmakedefine HAVE_SYS_PARAM_H @HAVE_SYS_PARAM_H@
 
 /* Define if you have the <sys/stat.h> header file. */
-#undef HAVE_SYS_STAT_H
+#cmakedefine HAVE_SYS_STAT_H @HAVE_SYS_STAT_H@
 
 /* Define if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
@@ -140,7 +140,7 @@
 #undef HAVE_TRUNCATE
 
 /* Define if you have the <unistd.h> header file. */
-#undef HAVE_UNISTD_H
+#cmakedefine HAVE_UNISTD_H @HAVE_UNISTD_H@
 
 /* Define if you have the <wchar.h> header file. */
 #undef HAVE_WCHAR_H
@@ -149,19 +149,19 @@
 #undef HAVE_ZLIB_H
 
 /* Name of package */
-#undef PACKAGE
+//#undef PACKAGE
 
 /* Define if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
 /* Version number of package */
-#undef VERSION
+//#undef VERSION
 
 /* Define if you need to in order for stat and other things to work. */
-#undef _POSIX_SOURCE
+//#undef _POSIX_SOURCE
 
 /* Define to `unsigned' if <sys/types.h> does not define. */
-#undef size_t
+//#undef size_t
 /* This is the bottom section */
 
 // This file defines portability work-arounds for various proprietory

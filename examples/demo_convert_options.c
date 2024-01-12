@@ -15,7 +15,7 @@
 
 /* If we use autoconf.  */
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 /* Check for configure's getopt check result.  */
@@ -30,7 +30,7 @@
 /* Don't define PACKAGE and VERSION if we use automake.  */
 #define GGO_PACKAGE "id3convert"
 #ifndef VERSION
-#  define GGO_VERSION VERSION
+#  define GGO_VERSION ""
 #else
 /* ******* WRITE THE VERSION OF YOUR PROGRAM HERE ******* */
 #  define GGO_VERSION ""
