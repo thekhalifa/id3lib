@@ -179,7 +179,7 @@ import "ocidl.idl";
       /* USER */ ID3_TERMSOFUSE,        /**< Terms of use */
       /* USLT */ ID3_UNSYNCEDLYRICS,    /**< Unsynchronized lyric/text transcription */
       /* WCOM */ ID3_WWWCOMMERCIALINFO, /**< Commercial information */
-      /* WCOP */ ID3_WWWCOPYRIGHT,      /**< Copyright/Legal infromation */
+      /* WCOP */ ID3_WWWCOPYRIGHT,      /**< Copyright/Legal information */
       /* WOAF */ ID3_WWWAUDIOFILE,      /**< Official audio file webpage */
       /* WOAR */ ID3_WWWARTIST,         /**< Official artist/performer webpage */
       /* WOAS */ ID3_WWWAUDIOSOURCE,    /**< Official audio source webpage */

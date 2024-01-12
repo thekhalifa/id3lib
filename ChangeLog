@@ -2261,7 +2261,7 @@
 	* examples/demo_info.cpp (1.19): 
 	(PrintInformation): When printing synced lyrics info, now uses a 
 	MemoryReader, BinaryNumberReader, and TextReader to extract the 
-	infromation from the binary field.  This is a cheat, since these 
+	information from the binary field.  This is a cheat, since these
 	classes aren't normally exposed to folks using the library. 
 	Hopefully they will be exposed soon enough for the next major
 	release.  

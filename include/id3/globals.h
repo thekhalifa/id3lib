@@ -313,7 +313,7 @@ ID3_ENUM(ID3_FrameID)
   /* USER */ ID3FID_TERMSOFUSE,        /**< Terms of use */
   /* USLT */ ID3FID_UNSYNCEDLYRICS,    /**< Unsynchronized lyric/text transcription */
   /* WCOM */ ID3FID_WWWCOMMERCIALINFO, /**< Commercial information */
-  /* WCOP */ ID3FID_WWWCOPYRIGHT,      /**< Copyright/Legal infromation */
+  /* WCOP */ ID3FID_WWWCOPYRIGHT,      /**< Copyright/Legal information */
   /* WOAF */ ID3FID_WWWAUDIOFILE,      /**< Official audio file webpage */
   /* WOAR */ ID3FID_WWWARTIST,         /**< Official artist/performer webpage */
   /* WOAS */ ID3FID_WWWAUDIOSOURCE,    /**< Official audio source webpage */
@@ -608,7 +608,7 @@ static const char *ID3_v1_genre_description[ID3_NR_OF_V1_GENRES] =
   "Native American",   //64
   "Cabaret",           //65
   "New Wave",          //66
-  "Psychadelic",       //67
+  "Psychedelic",       //67
   "Rave",              //68
   "Showtunes",         //69
   "Trailer",           //70
@@ -686,7 +686,7 @@ static const char *ID3_v1_genre_description[ID3_NR_OF_V1_GENRES] =
   "Christian Rock ",       //141
   "Merengue",              //142
   "Salsa",                 //143
-  "Trash Metal",           //144
+  "Thrash Metal",          //144
   "Anime",                 //145
   "JPop",                  //146
   "Synthpop"               //147
