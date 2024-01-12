@@ -1,3 +1,8 @@
+2006-02-17  Jerome Couderc
+
+    * Patch from Spoon to fix UTF-16 writing bug
+      http://sourceforge.net/tracker/index.php?func=detail&aid=1016290&group_id=979&atid=300979
+
 2003-03-02 Sunday 17:38   Thijmen Klok <thijmen@id3lib.org>
 
 	* THANKS (1.20): added more people 
@@ -5459,7 +5464,7 @@
 2000-05-03 Wednesday 00:10  eldamitri
 
 	* src/tag.cpp (1.11): 
-	(SetPadding): Fixed minor bug (thanks Sasa –olic) 
+	(SetPadding): Fixed minor bug (thanks Sasa √êolic) 
 
 2000-05-03 Wednesday 00:00  eldamitri
 
