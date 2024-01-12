@@ -104,6 +104,9 @@ extern "C"
   ID3_C_EXPORT void                 CCONV ID3Field_GetBINARY          (const ID3Field *field, uchar *buffer, size_t buffLength);
   ID3_C_EXPORT void                 CCONV ID3Field_FromFile           (ID3Field *field, const char *fileName);
   ID3_C_EXPORT void                 CCONV ID3Field_ToFile             (const ID3Field *field, const char *fileName);
+  ID3_C_EXPORT bool                 CCONV ID3Field_SetEncoding        (ID3Field *field, ID3_TextEnc enc);
+  ID3_C_EXPORT ID3_TextEnc          CCONV ID3Field_GetEncoding        (const ID3Field *field);
+  ID3_C_EXPORT bool                 CCONV ID3Field_IsEncodable        (const ID3Field *field);
 
   /* field-info wrappers */
   ID3_C_EXPORT char*                CCONV ID3FrameInfo_ShortName     (ID3_FrameID frameid);

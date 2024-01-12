@@ -681,6 +681,39 @@ extern "C"
     }
   }
 
+  ID3_C_EXPORT bool CCONV
+  ID3Field_SetEncoding(ID3Field *field, ID3_TextEnc enc)
+  {
+    bool changed = false;
+    if (field)
+    {
+      ID3_CATCH(changed = reinterpret_cast<ID3_Field *>(field)->SetEncoding(enc));
+    }
+    return changed;
+  }
+
+  ID3_C_EXPORT ID3_TextEnc CCONV
+  ID3Field_GetEncoding(const ID3Field *field)
+  {
+    ID3_TextEnc enc = ID3TE_NONE;
+    if (field)
+    {
+      ID3_CATCH(enc = reinterpret_cast<const ID3_Field *>(field)->GetEncoding());
+    }
+    return enc;
+  }
+
+  ID3_C_EXPORT bool CCONV
+  ID3Field_IsEncodable(const ID3Field *field)
+  {
+    bool isEncodable = false;
+    if (field)
+    {
+      ID3_CATCH(isEncodable = reinterpret_cast<const ID3_Field *>(field)->IsEncodable());
+    }
+    return isEncodable;
+  }
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
