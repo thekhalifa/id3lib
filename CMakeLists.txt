@@ -22,10 +22,10 @@ include(FindPkgConfig)
 check_include_file_cxx("bitset" HAVE_BITSET)
 check_include_file_cxx("getopt.h" HAVE_GETOPT_LONG)
 check_include_file_cxx("iconv.h" HAVE_ICONV_H)
+check_include_file_cxx("stdlib.h" HAVE_MKSTEMP)
 check_include_file_cxx("sys/param.h" HAVE_SYS_PARAM_H)
 check_include_file_cxx("sys/stat.h" HAVE_SYS_STAT_H)
 check_include_file_cxx("unistd.h" HAVE_UNISTD_H)
-
 
 pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
 
