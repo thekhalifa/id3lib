@@ -1,6 +1,6 @@
 
-
-set(ID3LIB_SOURCES c_wrapper.cpp
+set(ID3LIB_SOURCES
+	c_wrapper.cpp
 	field.cpp
 	field_binary.cpp
 	field_integer.cpp

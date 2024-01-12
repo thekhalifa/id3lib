@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 98)
 
-# Overwrite the init values choosen by CMake
-#set(CMAKE_CXX_FLAGS_RELEASE_INIT "-ggdb3 -O0")
-
-
 project(libid3 VERSION 3.8.3 LANGUAGES C CXX)
 set(PROJECT_AUTHOR "Ahmad Khalifa")
 set(PROJECT_HOMEPAGE_URL "...")
@@ -27,18 +23,24 @@ check_include_file_cxx("sys/param.h" HAVE_SYS_PARAM_H)
 check_include_file_cxx("sys/stat.h" HAVE_SYS_STAT_H)
 check_include_file_cxx("unistd.h" HAVE_UNISTD_H)
 
+
+if(CMAKE_SYSTEM MATCHES Windows)
+    message(STATUS "Target system is Windows")
+    add_compile_definitions(ID3LIB_LINKOPTION=1)
+endif()
+
 pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
 
-set(config_h_out ${CMAKE_SOURCE_DIR}/include/config.h)
-configure_file(config.h.in ${config_h_out})
-
+configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h)
 add_compile_definitions(HAVE_CONFIG_H)
-add_compile_definitions(_FORTIFY_SOURCE=2)
 
-include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/include/id3)
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/include/id3
+    ${CMAKE_BINARY_DIR})
 
 
-# Tests
+# Tests - nothing happening now, needs a refactor
 if (WITH_TESTS)
     message("Enabled Tests")
     enable_testing()

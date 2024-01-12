@@ -1,6 +1,11 @@
 # put examples with .so in build/
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+if(CMAKE_SYSTEM MATCHES Windows)
+	add_link_options( -static-libgcc -static-libstdc++)
+	# not great, but better than shipping mingw dlls
+	add_link_options( -Wl,-allow-multiple-definition )
+endif()
 
 # Working examples (Tools)
 add_executable(id3cp demo_copy.cpp demo_copy_options.c)
