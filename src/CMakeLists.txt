@@ -38,3 +38,4 @@ set(ID3LIB_SOURCES
 add_library(id3 SHARED ${ID3LIB_SOURCES})
 target_link_libraries(id3 PRIVATE ${zlib_LINK_LIBRARIES})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+install(TARGETS id3 LIBRARY)

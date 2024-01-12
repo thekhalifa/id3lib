@@ -77,6 +77,11 @@ if (WITH_DOCS)
     file(COPY doc/man DESTINATION ${CMAKE_BINARY_DIR}/docs FILES_MATCHING PATTERN *.1)
 endif()
 
+# WITH_DOCS or not, install manpages
+install(DIRECTORY "doc/man/" DESTINATION "share/man/man1"
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+        PATTERN *.1)
+
 
 add_subdirectory(src)
 add_subdirectory(examples)

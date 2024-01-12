@@ -10,15 +10,19 @@ endif()
 # Working examples (Tools)
 add_executable(id3cp demo_copy.cpp demo_copy_options.c)
 target_link_libraries(id3cp id3)
+install(TARGETS id3cp RUNTIME)
 
 add_executable(id3convert demo_convert.cpp demo_convert_options.c)
 target_link_libraries(id3convert id3)
+install(TARGETS id3convert RUNTIME)
 
 add_executable(id3info demo_info.cpp demo_info_options.c)
 target_link_libraries(id3info id3)
+install(TARGETS id3info RUNTIME)
 
 add_executable(id3tag demo_tag.cpp demo_tag_options.c)
 target_link_libraries(id3tag id3)
+install(TARGETS id3tag RUNTIME)
 
 # Not really useful ones
 add_executable(demo_simple demo_simple.cpp)
