@@ -1,9 +1,19 @@
-General Information
-===================
+# id3lib
+
+
+    This is an attempt at reviving this 20-year old bit of code whilst
+    keeping it functional whereever it is already being used.
+
+
+    The original README contents are shown below as-is, but most
+    links and mailing lists are no longer there.
+
+------------------------------------------------------------------------
+
 
 id3lib is a software library for manipulating ID3v1/v1.1 and ID3v2 tags.
 id3lib 3.0.x conforms to all ID3v2 standards up to and including the ID3v2.3.0
-informal standard.  
+informal standard.
 
 The id3lib project makes use of the resources available through
 SourceForge.net.  Using SourceForge, the id3lib project is able to provide
@@ -25,13 +35,13 @@ You can subscribe, unsubscribe, and view mailing list archives at:
 Information about ID3v2 and related standards can be found at: 
    http://www.id3.org
 
-Installation
-============
+
+# Installation
 
 See the file 'INSTALL'
 
-Requirements
-============
+
+# Requirements
 
 In order to successfully compile and use id3lib, the following programs and
 libraries are needed:
@@ -49,8 +59,9 @@ Using:
 ----------
 zlib
 
-How to report bugs
-==================
+
+# How to report bugs
+
 
 To report a bug, submit it to the bug tracker, linked to from the id3lib
 project page, or send mail to the id3lib-devel mailing list.
@@ -79,16 +90,14 @@ If you send it to the mailing list, please include the following:
 * Further information such as stack traces may be useful, but
   is not necessary.
 
-Patches
-=======
+# Patches
 
 Patches can be submitted to the patch manager at the id3lib project page, as
 mentioned above.  Please follow the instructions there.  So as not to annoy
 uniterested parties with large email messages, it is preferable that you not
 send such patches to the mailing list.
 
-For Further Reading
-===================
+# For Further Reading
 
 id3lib is free software. Please see the COPYING file for details.
 For documentation, please see the files in the doc subdirectory.
