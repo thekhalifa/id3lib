@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LGPL-3.0-only
 
 set(ID3LIB_SOURCES
 	c_wrapper.cpp
