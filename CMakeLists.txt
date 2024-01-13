@@ -44,13 +44,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include/id3
     ${CMAKE_BINARY_DIR})
 
-
-# Tests - nothing happening now, needs a refactor
-if (WITH_TESTS)
-    message("Enabled Tests")
-    enable_testing()
-endif()
-
 # API Docs
 if (WITH_DOCS)
     message("Enabled docs")
@@ -90,3 +83,11 @@ install(DIRECTORY "doc/man/" DESTINATION "share/man/man1"
 
 add_subdirectory(src)
 add_subdirectory(examples)
+
+
+# Tests - nothing happening now, needs a refactor
+if (WITH_TESTS)
+    message("Enabled Tests")
+    enable_testing()
+    add_subdirectory(tests)
+endif()
