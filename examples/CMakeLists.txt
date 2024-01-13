@@ -22,7 +22,7 @@ add_executable(id3info demo_info.cpp)
 target_link_libraries(id3info id3)
 install(TARGETS id3info RUNTIME)
 
-add_executable(id3tag demo_tag.cpp demo_tag_options.c)
+add_executable(id3tag demo_tag.cpp)
 target_link_libraries(id3tag id3)
 install(TARGETS id3tag RUNTIME)
 
