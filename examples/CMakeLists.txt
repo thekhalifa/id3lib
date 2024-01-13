@@ -30,6 +30,9 @@ install(TARGETS id3tag RUNTIME)
 add_executable(demo_simple demo_simple.cpp)
 target_link_libraries(demo_simple id3)
 
+add_executable(demo_main demo_main.cpp)
+target_link_libraries(demo_main id3)
+
 add_executable(findeng findeng.cpp)
 target_link_libraries(findeng id3)
 

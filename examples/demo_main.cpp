@@ -1,41 +1,61 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#ifndef __DLL
-
-
 #include "id3/id3lib_streams.h"
 #include "id3/tag.h"
+
+#define APP_NAME "example_writetag"
 
 using std::cout;
 using std::endl;
 using std::cerr;
 
-
-void MakeDummyTag (void)
+void PrintUsage ()
 {
-    ID3_Tag   myTag ("dummy.tag");
-    ID3_Frame myFrame[3];
+    cout << "Write tag example" << endl;
+    cout << "Usage: " << APP_NAME << " <NEW_FILE>" << endl;
+    cout << endl;
+}
 
-    myFrame[0].SetID (ID3FID_USERTEXT);
-    myFrame[0].Field (ID3FN_TEXTENC)     = ID3TE_UNICODE;
-    myFrame[0].Field (ID3FN_DESCRIPTION) = "example #1";
-    myFrame[0].Field (ID3FN_TEXT)        = "This is the text for example #1";
+void SetFrameText (ID3_Frame &frame, ID3_FrameID frame_id, std::string text)
+{
+    frame.SetID (frame_id);
+    frame.Field (ID3FN_TEXTENC) = ID3TE_ASCII;
+    frame.Field (ID3FN_TEXT) = text.c_str();
+}
 
-    myFrame[1].SetID (ID3FID_USERTEXT);
-    myFrame[1].Field (ID3FN_TEXTENC)     = ID3TE_ASCII;
-    myFrame[1].Field (ID3FN_DESCRIPTION) = "example #2";
-    myFrame[1].Field (ID3FN_TEXT)        = "This is the text for example #2";
+void SetFrameTextEnc (ID3_Frame &frame, ID3_FrameID frame_id, ID3_TextEnc enc,
+                      std::string text, std::string description)
+{
+    frame.SetID (frame_id);
+    frame.Field (ID3FN_TEXTENC) = enc;
+    frame.Field (ID3FN_TEXT) = text.c_str();
 
-    myFrame[2].SetID (ID3FID_INVOLVEDPEOPLE);
-    myFrame[2].Field (ID3FN_TEXTENC)     = ID3TE_ASCII;
-    myFrame[2].Field (ID3FN_TEXT).Add ("String 1");
-    myFrame[2].Field (ID3FN_TEXT).Add ("String 2");
-    myFrame[2].Field (ID3FN_TEXT).Add ("String 3");
-    myFrame[2].Field (ID3FN_TEXT).Add ("String 4");
+    if (description.size())
+        frame.Field (ID3FN_DESCRIPTION) = description.c_str();
+}
 
-    myTag.AddFrames (myFrame, 3);
+void WriteTag (std::string filename)
+{
+    ID3_Tag   myTag (filename.c_str());
+    ID3_Frame myFrame[6];
 
-    //myTag.SetVersion(3, 0);
+    SetFrameText (myFrame[0], ID3FID_LEADARTIST, "Great Artist");
+    SetFrameText (myFrame[1], ID3FID_ALBUM, "Great Album");
+    SetFrameText (myFrame[2], ID3FID_TITLE, "Great Song");
+
+    SetFrameTextEnc (myFrame[3], ID3FID_USERTEXT, ID3TE_UNICODE,
+                     "Unicode Example", "Latin \u00c7, \u00cb, \u1e00, \u1e34 as example");
+
+    SetFrameTextEnc (myFrame[4], ID3FID_USERTEXT, ID3TE_ASCII,
+                     "ASCII Example", "This is the text for example #2");
+
+    myFrame[5].SetID (ID3FID_INVOLVEDPEOPLE);
+    myFrame[5].Field (ID3FN_TEXTENC)     = ID3TE_ASCII;
+    myFrame[5].Field (ID3FN_TEXT).Add ("Artist 1");
+    myFrame[5].Field (ID3FN_TEXT).Add ("Artist 2");
+
+    myTag.AddFrames (myFrame, 6);
+
     myTag.SetUnsync (false);
     myTag.SetExtendedHeader (false);
     myTag.SetCompression (false);
@@ -44,76 +64,24 @@ void MakeDummyTag (void)
     myTag.Strip();
     myTag.Update();
 
-    return;
-}
-
-
-void StripTags (char *file)
-{
-    ID3_Tag myTag;
-
-    myTag.Link (file);
-    myTag.Strip();
+    cout << "Wrote to file " << filename << std::endl;
 
     return;
 }
-
-
-void GetTestTag (void)
-{
-    ID3_Tag  myTag ("dummy.tag");
-    ID3_Frame *myFrame;
-
-    if (myFrame = myTag.Find (ID3FID_PICTURE)) {
-        cout << "Found a picture frame!\r\n" << endl;
-
-        char *dada = "output.jpg";
-
-        myFrame->Field (ID3FN_DATA).ToFile (dada);
-    }
-
-    if (myFrame = myTag.Find (ID3FID_USERTEXT, ID3FN_DESCRIPTION, "example #1")) {
-        cout << "Found a user text frame!\r\n" << endl;
-
-        char textBuff[1024];
-
-        myFrame->Field (ID3FN_DESCRIPTION).Get (textBuff, 1024);
-        cout << "Desc: " << textBuff << endl;
-
-        myFrame->Field (ID3FN_TEXT).Get (textBuff, 1024);
-        cout << "Text: " << textBuff << endl;
-    }
-
-    for (luint i = 0; i < myTag.NumFrames(); i++)
-        if (myFrame = myTag[i]) {
-            cout << "Frame " << i << " has ID " << (luint) myFrame->GetID() << endl;
-        }
-
-    return;
-}
-
 
 int main (int argc, char *argv[])
 {
-    try {
-        //  CreateDemoTag1();
-        //  MakeDummyTag();
-        //  GetTestTag();
-        StripTags ("c:\\temp.mp3");
+
+    if (argc != 2) {
+        PrintUsage();
+        exit (1);
     }
 
+    ifstream infile(argv[1]);
+    if (infile.good())
+        cout << "File exists, appending" << std::endl;
 
-    catch (ID3_Error err) {
-        cout << "Error in ID3Lib!" << endl;
-        cout << "Error: '" << err.GetErrorDesc() << "'" << endl;
-        cout << " File: '" << err.GetErrorFile() << "'" << endl;
-        cout << " Line: " << err.GetErrorLine() << endl;
-    }
+    WriteTag (argv[1]);
 
     return 0;
 }
-
-
-#endif
-
-
