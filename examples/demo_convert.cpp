@@ -1,20 +1,18 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-
+#include <config.h>
+#include <id3/id3lib_streams.h>
+#include <id3/tag.h>
 #include <string.h>
-#include "id3/id3lib_streams.h"
-#include "id3/tag.h"
-#include "demo_convert_options.h"
+#include <vector>
+
+#define APP_NAME "id3convert"
 
 using std::cout;
 using std::endl;
 
-static const char *VERSION_NUMBER = "$Revision: 1.15 $";
-
-void PrintUsage (const char *sName)
+/* Replaced gengetopt as with demo_info/id3info */
+void PrintUsage ()
 {
     cout << "Converts between id3v1 and id3v2 tags of an mp3 file." << endl;
     cout << endl;
@@ -23,35 +21,28 @@ void PrintUsage (const char *sName)
          << "rendered will remain unchanged in the original file.  Will" << endl
          << "also parse and convert Lyrics3 v2.0 frames, but will not" << endl
          << "render them." << endl;
-}
-
-void PrintVersion (const char *sName)
-{
-    size_t nIndex;
-    cout << sName << " ";
-
-    for (nIndex = 0; nIndex < strlen (VERSION_NUMBER); nIndex++) {
-        if (VERSION_NUMBER[nIndex] == ' ') {
-            break;
-        }
-    }
-
-    nIndex++;
-
-    for (; nIndex < strlen (VERSION_NUMBER); nIndex++) {
-        if (VERSION_NUMBER[nIndex] == ' ') {
-            break;
-        }
-
-        cout << VERSION_NUMBER[nIndex];
-    }
-
     cout << endl;
-    cout << "Uses " << ID3LIB_FULL_NAME << endl << endl;
-
-    cout << "This program converts and strips ID3v1/1.1 and Lyrics3 v2.0" << endl;
-    cout << "tags to ID3v2 tags." << endl << endl;
+    cout << "Usage: " << APP_NAME << " [OPTIONS] <FILES>..." << endl;
+    cout << "       " << APP_NAME << " [-h | -V]" << endl;
+    cout << endl;
+    cout << "  -1  --v1tag     Render only the id3v1 tag (default=off)" << endl;
+    cout << "  -2  --v2tag     Render only the id3v2 tag (default=off)" << endl;
+    cout << "  -s  --strip     Strip the tags instead of rendering (default=off)" << endl;
+    cout << "  -p  --padding   Use padding in the tag (default=off)" << endl;
+    cout << endl;
+    cout << "  -h, --help      Print help and exit" << endl;
+    cout << "  -V, --version   Print version and exit" << endl;
+    cout << endl;
 }
+
+void PrintVersion ()
+{
+    cout << APP_NAME << " version: " << VERSION << endl;
+    cout << "Converts between id3v1 and id3v2 tags of an mp3 file." << endl;
+    cout << "Uses " << ID3LIB_FULL_NAME << endl;
+    cout << endl;
+}
+
 
 void DisplayTags (ostream &os, luint nTags)
 {
@@ -74,59 +65,63 @@ void DisplayTags (ostream &os, luint nTags)
 
 int main (int argc, char *const argv[])
 {
-    flags_t ulFlag = ID3TT_ALL;
-    gengetopt_args_info args;
 
-    if (cmdline_parser (argc, argv, &args) != 0) {
+    if (argc < 2) {
+        PrintUsage();
         exit (1);
     }
 
-#if defined ID3_ENABLE_DEBUG
+    std::vector<std::string> files;
+    flags_t ulFlag = ID3TT_ALL;
+    bool strip = false, padding = false;
 
-    if (args.warning_flag) {
-        ID3D_INIT_WARNING();
-        ID3D_WARNING ("warnings turned on");
+    for (size_t i = 1; i < argc; i++) {
+        std::string arg = argv[i];
+        if (arg == "-h" || arg == "--help") {
+            PrintUsage();
+            exit (0);
+        } else if (arg == "-V" || arg == "--version") {
+            PrintVersion();
+            exit (0);
+        } else if (arg == "-1" || arg == "--v1tag") {
+            ulFlag = ID3TT_ID3V1;
+        } else if (arg == "-2" || arg == "--v2tag") {
+            ulFlag = ID3TT_ID3V2;
+        } else if (arg == "-s" || arg == "--strip") {
+            strip = true;
+        } else if (arg == "-p" || arg == "--padding") {
+            padding = true;
+        } else if (arg.at (0) == '-') {
+            cout << "Error, Invalid option: " << arg << endl << endl;
+            PrintUsage();
+            exit (1);
+        }else {
+            files.push_back(arg);
+        }
     }
 
-    if (args.notice_flag) {
-        ID3D_INIT_NOTICE();
-        ID3D_NOTICE ("notices turned on");
-    }
-
-#endif
-
-    if (args.v1tag_flag) {
-        ulFlag = ID3TT_ID3V1;
-    }
-
-    if (args.v2tag_flag) {
-        ulFlag = ID3TT_ID3V2;
-    }
-
-
-    const char *filename = NULL;
-
-    for (size_t i = 0; i < args.inputs_num; ++i) {
-        filename = args.inputs[i];
+    std::vector<std::string>::iterator i;
+    for (i = files.begin(); i != files.end(); i++) {
+        std::string filename = *i;
         ID3_Tag myTag;
 
-        if (args.strip_given) {
-            cout << "Stripping ";
+        if (strip) {
+            cout << "Stripping " << filename << ": ";
         } else {
-            cout << "Converting ";
+            cout << "Converting " << filename << ": ";
         }
 
         cout << filename << ": ";
 
         myTag.Clear();
-        myTag.Link (filename, ID3TT_ALL);
-        myTag.SetPadding (args.padding_flag);
+        myTag.Link (filename.c_str(), ID3TT_ALL);
+        myTag.SetPadding (padding);
 
         cout << "attempting ";
         DisplayTags (cout, ulFlag);
         luint nTags;
 
-        if (args.strip_flag) {
+        if (strip) {
             nTags = myTag.Strip (ulFlag);
             cout << ", stripped ";
         } else {

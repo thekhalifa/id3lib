@@ -14,7 +14,7 @@ add_executable(id3cp demo_copy.cpp demo_copy_options.c)
 target_link_libraries(id3cp id3)
 install(TARGETS id3cp RUNTIME)
 
-add_executable(id3convert demo_convert.cpp demo_convert_options.c)
+add_executable(id3convert demo_convert.cpp)
 target_link_libraries(id3convert id3)
 install(TARGETS id3convert RUNTIME)
 
