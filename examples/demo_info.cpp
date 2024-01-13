@@ -1,39 +1,41 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-
-#include <id3/tag.h>
-#include <id3/utils.h>
+#include <config.h>
+#include <id3/io_helpers.h>
 #include <id3/misc_support.h>
 #include <id3/readers.h>
-#include <id3/io_helpers.h>
+#include <id3/tag.h>
+#include <id3/utils.h>
 
-#include "demo_info_options.h"
+#define APP_NAME "id3info"
 
 using namespace dami;
 using std::cout;
 using std::endl;
 
-static String VERSION_NUMBER = "$Revision: 1.32 $";
-
-void PrintUsage (const char *sName)
+/*
+ * Replace the gengetopt generated code with basic arg parsing. Even though
+ * getopt() is now part of libc, the file was attached here probably for other
+ * architectures. In order to support Windows, focus on the main purpose of
+ * this utility and parse filenams directly with couple of basic options.
+ */
+void PrintUsage ()
 {
-    cout << "Usage: " << sName << " [OPTION]... [FILE]..." << endl;
-    cout << "Display the id3 (both v1 and v2) tag information for a file." << endl;
+    cout << "Display the id3 (both v1 and v2) tag information for one or more files." << endl;
+    cout << "Usage: " << APP_NAME << " <FILES>..." << endl;
+    cout << "       " << APP_NAME << " [-h | -v]" << endl;
     cout << endl;
-    cout << "  -h, --help      Display this help and exit" << endl;
-    cout << "  -v, --version   Display version information and exit" << endl;
+    cout << "  -h, --help      Print help and exit" << endl;
+    cout << "  -v, --version   Print version and exit" << endl;
     cout << endl;
-    cout << "Will not differentiate between the two types of tags" << endl;
 }
 
-void PrintVersion (const char *sName)
+void PrintVersion ()
 {
-    cout << sName << " " << VERSION_NUMBER.c_str() << endl;
+    cout << APP_NAME << " version: " << VERSION << endl;
     cout << "Displays ID3 Tag Information - Written by Scott Thomas Haug" << endl;
-    cout << "Uses " << ID3LIB_FULL_NAME << endl << endl;
+    cout << "Uses " << ID3LIB_FULL_NAME << endl;
+    cout << endl;
 }
 
 void PrintInformation (const ID3_Tag &myTag)
@@ -317,52 +319,43 @@ void PrintInformation (const ID3_Tag &myTag)
     delete iter;
 }
 
-#define DEBUG
-
 int main (int argc, char *const argv[])
 {
     ID3D_INIT_DOUT();
+    ID3D_INIT_WARNING();
+    ID3D_INIT_NOTICE();
 
-    gengetopt_args_info args;
-
-    if (cmdline_parser (argc, argv, &args) != 0) {
+    if (argc < 2) {
+        PrintUsage();
         exit (1);
     }
 
-#if defined ID3_ENABLE_DEBUG
+    std::string arg1 = argv[1];
 
-    if (args.warning_flag) {
-        ID3D_INIT_WARNING();
-        ID3D_WARNING ("warnings turned on");
+    if (arg1 == "-h") {
+        PrintUsage();
+        exit (0);
+    } else if (arg1 == "-v") {
+        PrintVersion();
+        exit (0);
+    } else if (arg1.at (0) == '-') {
+        cout << "Error, Invalid option." << endl;
+        PrintUsage();
+        exit (1);
     }
 
-    if (args.notice_flag) {
-        ID3D_INIT_NOTICE();
-        ID3D_NOTICE ("notices turned on");
-    }
+    std::string filename;
 
-#endif
+    for (size_t i = 1; i < argc; i++) {
+        filename = argv[i];
 
-
-    const char *filename = NULL;
-
-    for (size_t i = 0; i < args.inputs_num; ++i) {
-        filename = args.inputs[i];
         ID3_Tag myTag;
-
-        myTag.Link (filename, ID3TT_ALL);
+        myTag.Link (filename.c_str(), ID3TT_ALL);
         const Mp3_Headerinfo *mp3info;
         mp3info = myTag.GetMp3HeaderInfo();
 
         cout << endl << "*** Tag information for " << filename << endl;
-
-        if (!args.assign_given) {
-            PrintInformation (myTag);
-        } else {
-            cout << "*** Testing assignment operator" << endl;
-            ID3_Tag tmpTag (myTag);
-            PrintInformation (tmpTag);
-        }
+        PrintInformation (myTag);
 
         if (mp3info) {
             cout << "*** mp3 info\n";
@@ -410,4 +403,3 @@ int main (int argc, char *const argv[])
 
     return 0;
 }
-
