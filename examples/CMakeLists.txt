@@ -33,6 +33,9 @@ target_link_libraries(demo_simple id3)
 add_executable(demo_main demo_main.cpp)
 target_link_libraries(demo_main id3)
 
+add_executable(id3image get_pic.cpp)
+target_link_libraries(id3image id3)
+
 add_executable(findeng findeng.cpp)
 target_link_libraries(findeng id3)
 
