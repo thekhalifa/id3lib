@@ -11,6 +11,11 @@ set(ID3LIB_INTERFACE_AGE 0)
 set(ID3LIB_BINARY_AGE 0)
 set(ID3LIB_COMPILE_DEBUG "")
 
+# Enable warning/notice messages if enabled through cmake
+if (ID3_ENABLE_DEBUG)
+    add_compile_definitions(ID3_ENABLE_DEBUG=1)
+endif()
+
 #include(CheckIncludeFiles)
 include(CheckIncludeFileCXX)
 include(FindPkgConfig)

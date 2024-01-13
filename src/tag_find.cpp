@@ -90,7 +90,7 @@ ID3_Frame *ID3_TagImpl::Find (ID3_FrameID id, ID3_FieldID fldID, String data) co
 
         // search from the cursor to the end
         for (const_iterator cur = begin; cur != end; ++cur) {
-            ID3D_NOTICE ("Find: frame = 0x" << hex << (uint32) *cur << dec);
+            ID3D_NOTICE ("Find: frame = 0x" << std::hex << *cur << std::dec);
 
             if ( (*cur != NULL) && ( (*cur)->GetID() == id) &&
                     (*cur)->Contains (fldID)) {

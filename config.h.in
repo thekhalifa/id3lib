@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 
-/* This is the top section */
+#ifndef ID3LIB_CONFIG_H
+#define ID3LIB_CONFIG_H
 
-/* This is the template section */
-
-/* These are standard for all packages using Automake */
 #define PACKAGE "@CMAKE_PROJECT_NAME@"
 #define VERSION "@CMAKE_PROJECT_VERSION@"
 
@@ -14,7 +12,6 @@
 #ifndef __cplusplus
 #undef CXX_HAS_NO_BOOL
 #endif
-#undef ID3_ENABLE_DEBUG
 #undef ID3_DISABLE_ASSERT
 #undef ID3_DISABLE_CHECKS
 #undef ID3_ICONV_FORMAT_UTF16BE
@@ -179,27 +176,23 @@
 #define false 0
 #endif
    
-#if defined (ID3_ENABLE_DEBUG) && defined (HAVE_LIBCW_SYS_H) && defined (__cplusplus)
-
+/* debug logging */
+#if defined (ID3_ENABLE_DEBUG)
+//TODO: libcwd not available in distros, replace with basic printing temporarily
+//#include <iostream>
 #define DEBUG
-
-#include <libcw/sys.h>
-#include <libcw/debug.h>
-
-#define ID3D_INIT_DOUT()    Debug( libcw_do.on() )
-#define ID3D_INIT_WARNING() Debug( dc::warning.on() )
-#define ID3D_INIT_NOTICE()  Debug( dc::notice.on() )
-#define ID3D_NOTICE(x)      Dout( dc::notice, x )
-#define ID3D_WARNING(x)     Dout( dc::warning, x )
-
+#define ID3D_INIT_DOUT()
+#define ID3D_INIT_WARNING()
+#define ID3D_INIT_NOTICE()
+#define ID3D_NOTICE(x)      std::cerr << x << std::endl;
+#define ID3D_WARNING(x)     std::cerr << x << std::endl;
 #else
-
-#  define ID3D_INIT_DOUT()
-#  define ID3D_INIT_WARNING()
-#  define ID3D_INIT_NOTICE()
-#  define ID3D_NOTICE(x)
-#  define ID3D_WARNING(x)
-
-#endif /* defined (ID3_ENABLE_DEBUG) && defined (HAVE_LIBCW_SYS_H) */
+#define ID3D_INIT_DOUT()
+#define ID3D_INIT_WARNING()
+#define ID3D_INIT_NOTICE()
+#define ID3D_NOTICE(x)
+#define ID3D_WARNING(x)
+#endif
    
 
+#endif  /* ID3LIB_CONFIG_H */

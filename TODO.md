@@ -1,5 +1,7 @@
+
 # id3lib TODO
 
+- Migrate to C++ 2011, but not until there is a stable cleaned up version
 - Add pkgconf file, 2024
 - Add unit tests and sample files
 - Add strip post build to reduce binary sizes as libtool is not there anymore
@@ -7,11 +9,17 @@
     - Remove non-working examples
     - Distinguish between tools and tests, write tests separately
     - Mind where they write their files
+- Move id3info type switch into the API, it should report the type directly
 
 ### Maybes
 
 - Review tickets on sf.net to see if they're relevant
 
+## Done
+
+- Remove Debug directives for libcwd as it's not in distros
+- Replace license header with SPDX identifier
+- Reformat files
 
 
 # Historical TODOs
