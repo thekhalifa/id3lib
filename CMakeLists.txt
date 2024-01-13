@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 98)
 
-project(libid3 VERSION 3.8.3 LANGUAGES C CXX)
+project(id3lib VERSION 3.8.3 LANGUAGES C CXX)
 set(PROJECT_AUTHOR "Ahmad Khalifa")
 set(PROJECT_HOMEPAGE_URL "...")
 set(PROJECT_DESCRIPTION "Library for manipulating ID3v1/v1.1 and ID3v2 tags")
@@ -36,7 +36,7 @@ endif()
 
 pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
 
-configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h)
+configure_file(${CMAKE_SOURCE_DIR}/src/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 add_compile_definitions(HAVE_CONFIG_H)
 
 include_directories(
