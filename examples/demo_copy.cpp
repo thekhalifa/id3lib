@@ -10,7 +10,6 @@
 
 using std::cout;
 using std::endl;
-using std::cerr;
 
 /* Replaced gengetopt as with demo_info/id3info */
 void PrintUsage ()

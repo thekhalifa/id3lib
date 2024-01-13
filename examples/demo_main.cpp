@@ -7,7 +7,6 @@
 
 using std::cout;
 using std::endl;
-using std::cerr;
 
 void PrintUsage ()
 {
@@ -64,7 +63,7 @@ void WriteTag (std::string filename)
     myTag.Strip();
     myTag.Update();
 
-    cout << "Wrote to file " << filename << std::endl;
+    cout << "Wrote to file " << filename << endl;
 
     return;
 }
@@ -79,7 +78,7 @@ int main (int argc, char *argv[])
 
     ifstream infile(argv[1]);
     if (infile.good())
-        cout << "File exists, appending" << std::endl;
+        cout << "File exists, appending" << endl;
 
     WriteTag (argv[1]);
 
