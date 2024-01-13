@@ -10,7 +10,7 @@ if(CMAKE_SYSTEM MATCHES Windows)
 endif()
 
 # Working examples (Tools)
-add_executable(id3cp demo_copy.cpp demo_copy_options.c)
+add_executable(id3cp demo_copy.cpp)
 target_link_libraries(id3cp id3)
 install(TARGETS id3cp RUNTIME)
 
