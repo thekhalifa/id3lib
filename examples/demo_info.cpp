@@ -18,15 +18,16 @@ using std::endl;
  * getopt() is now part of libc, the file was attached here probably for other
  * architectures. In order to support Windows, focus on the main purpose of
  * this utility and parse filenams directly with couple of basic options.
+ * One downside is that it's too basic to combine multiple short options in one
  */
 void PrintUsage ()
 {
     cout << "Display the id3 (both v1 and v2) tag information for one or more files." << endl;
     cout << "Usage: " << APP_NAME << " <FILES>..." << endl;
-    cout << "       " << APP_NAME << " [-h | -v]" << endl;
+    cout << "       " << APP_NAME << " [-h | -V]" << endl;
     cout << endl;
     cout << "  -h, --help      Print help and exit" << endl;
-    cout << "  -v, --version   Print version and exit" << endl;
+    cout << "  -V, --version   Print version and exit" << endl;
     cout << endl;
 }
 
@@ -332,14 +333,14 @@ int main (int argc, char *const argv[])
 
     std::string arg1 = argv[1];
 
-    if (arg1 == "-h") {
+    if (arg1 == "-h" || arg1 == "--help") {
         PrintUsage();
         exit (0);
-    } else if (arg1 == "-v") {
+    } else if (arg1 == "-V" || arg1 == "--version") {
         PrintVersion();
         exit (0);
     } else if (arg1.at (0) == '-') {
-        cout << "Error, Invalid option." << endl;
+        cout << "Error, Invalid option: " << arg1 << endl << endl;
         PrintUsage();
         exit (1);
     }
