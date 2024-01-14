@@ -169,6 +169,7 @@ int main (int argc, char *const argv[])
 
         cout << "attempting ";
         DisplayTags (cout, ulFlag);
+        cout << endl;
 
         mapit = tagmap.find ("ARTIST");
 

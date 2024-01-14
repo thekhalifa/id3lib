@@ -13,9 +13,9 @@
 #include <id3/io_strings.h>
 #include <id3/utils.h>
 
+using std::cin;
 using std::cout;
 using std::endl;
-using std::cerr;
 
 using namespace dami;
 
@@ -112,7 +112,7 @@ int main (int argc, const char **argv)
     cout << "binary number:";
 
     for (size_t i = 0; i < number.size(); ++i) {
-        cout << " 0x" << hex << (size_t) (0xFF & number[i]) << dec;
+        cout << " 0x" << std::hex << (size_t) (0xFF & number[i]) << std::dec;
     }
 
     cout << endl;

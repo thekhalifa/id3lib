@@ -1,20 +1,15 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 
-// $Id: test_unicode.cpp,v 1.8 2002/06/29 17:26:18 t1mpy Exp $
-
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-
-#include "id3/id3lib_streams.h"
+#include <id3/id3lib_streams.h>
 #include <id3/tag.h>
+#include "test_utils.h"
 
-int main (int argc, char *argv[])
+int test_unicode (const char *in, const char *out)
 {
     ID3_Tag tag;
     ID3_Frame frame;
 
-    tag.Link ("test-230-unicode.tag");
+    tag.Link (out);
     tag.Strip (ID3TT_ALL);
     tag.Clear();
 
@@ -28,6 +23,20 @@ int main (int argc, char *argv[])
     tag.SetUnsync (false);
     tag.Update (ID3TT_ID3V2);
 
-    return 0;
+    //compare both files
+    if (test_utils_files_match (in, out)) {
+        std::cout << "Files match" << std::endl << in << std::endl << out << std::endl;
+        return 0;
+    } else {
+        std::cout << "No Match!!!" << std::endl << in << std::endl << out << std::endl;
+        return 1;
+    }
+
 }
 
+int main (int argc, char *argv[])
+{
+    return test_unicode ("tags/230-unicode.tag",
+                        "tags/temp-230-unicode.tag");
+
+}

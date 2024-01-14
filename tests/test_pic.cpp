@@ -1,13 +1,8 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 
-// $Id: test_pic.cpp,v 1.10 2002/06/29 17:25:53 t1mpy Exp $
-
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-
 #include "id3/id3lib_streams.h"
 #include "id3/tag.h"
+#include "test_utils.h"
 
 int main (int argc, char *argv[])
 {
@@ -18,7 +13,7 @@ int main (int argc, char *argv[])
     ID3_Tag tag;
     ID3_Frame frame;
 
-    tag.Link ("test-230-picture.tag");
+    tag.Link ("tags/temp-230-picture.tag");
     tag.Strip (ID3TT_ALL);
     tag.Clear();
 
@@ -31,7 +26,7 @@ int main (int argc, char *argv[])
     tag.AddFrame (frame);
 
     frame.SetID (ID3FID_COMPOSER);
-    frame.GetField (ID3FN_TEXT)->Set ("Camille Saint-Sa�ns");
+    frame.GetField (ID3FN_TEXT)->Set ("Camille Saint-Sa\xebns"); //x to match original binary
     tag.AddFrame (frame);
 
     frame.SetID (ID3FID_BAND);
@@ -39,7 +34,8 @@ int main (int argc, char *argv[])
     tag.AddFrame (frame);
 
     frame.SetID (ID3FID_CONDUCTOR);
-    frame.GetField (ID3FN_TEXT)->Set ("Ondrej Len�rd");
+    frame.Field (ID3FN_TEXTENC) = ID3TE_ASCII;
+    frame.GetField (ID3FN_TEXT)->Set ("Ondrej Len\xe1rd"); //x to match original binary
     tag.AddFrame (frame);
 
     frame.SetID (ID3FID_COPYRIGHT);
@@ -60,14 +56,21 @@ int main (int argc, char *argv[])
     frame.SetID (ID3FID_PICTURE);
     frame.GetField (ID3FN_MIMETYPE)->Set ("image/jpeg");
     frame.GetField (ID3FN_PICTURETYPE)->Set (11);
-    frame.GetField (ID3FN_DESCRIPTION)->Set ("B/W picture of Saint-Sa�ns");
-    frame.GetField (ID3FN_DATA)->FromFile ("composer.jpg");
+    frame.GetField (ID3FN_DESCRIPTION)->Set ("B/W picture of Saint-Sa\xebns"); //x to match
+    frame.GetField (ID3FN_DATA)->FromFile ("tags/composer.jpg");
     tag.AddFrame (frame);
 
     tag.SetPadding (false);
     tag.SetUnsync (true);
     tag.Update (ID3TT_ID3V2);
-
-    return 0;
+    //compare both files
+    if (test_utils_files_match ("tags/230-picture.tag", "tags/temp-230-picture.tag")) {
+        std::cout << "Files match" << std::endl << "tags/230-picture.tag" <<
+            std::endl << "tags/temp-230-picture.tag" << std::endl;
+        return 0;
+    } else {
+        std::cout << "No Match!!!" << std::endl << "tags/230-picture.tag" <<
+            std::endl << "tags/temp-230-picture.tag" << std::endl;
+        return 1;
+    }
 }
-
