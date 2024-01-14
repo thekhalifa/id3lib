@@ -1,4 +1,6 @@
 /build/
 /buildwin/
+/build-release/
+/dist/
 *.kdev4
 /include/config.h

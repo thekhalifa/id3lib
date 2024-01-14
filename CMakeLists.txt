@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 98)
 
 project(id3lib VERSION 3.8.3 LANGUAGES C CXX)
 set(PROJECT_AUTHOR "Ahmad Khalifa")
-set(PROJECT_HOMEPAGE_URL "...")
+set(PROJECT_HOMEPAGE_URL "https://github.com/thekhalifa/id3lib")
 set(PROJECT_DESCRIPTION "Library for manipulating ID3v1/v1.1 and ID3v2 tags")
 
 set(ID3LIB_INTERFACE_AGE 0)
@@ -99,3 +99,12 @@ if (WITH_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
+
+# Source packaging
+# cpack -B dist --config build/CPackSourceConfig.cmake
+set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_SOURCE_PACKAGE_FILE_NAME ${PROJECT_NAME}-${CMAKE_PROJECT_VERSION})
+set(CPACK_SOURCE_IGNORE_FILES "\\.git.*" ".*\\.kdev4" "build.*" dist ".*~$")
+set(CPACK_VERBATIM_VARIABLES YES)
+include(CPack)
+
