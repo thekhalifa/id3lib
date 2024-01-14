@@ -1,12 +1,16 @@
 # id3lib
 
 
-    This is an attempt at reviving this 20-year old bit of code whilst
-    keeping it functional whereever it is already being used.
 
+This is an attempt at reviving this 20-year old bit of code whilst
+keeping it functional whereever it is already being used.
 
-    The original README contents are shown below as-is, but most
-    links and mailing lists are no longer there.
+This repository is based on the original sf repo with version 3.8.3 with
+several Debian patches applied and then a cmake build system added to
+replace autoconf/libtool and countless scripts.
+
+The original README contents are shown below as-is, but most
+links and mailing lists are no longer there.
 
 ------------------------------------------------------------------------
 

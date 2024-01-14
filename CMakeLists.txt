@@ -46,9 +46,14 @@ include_directories(
 
 # API Docs
 if (WITH_DOCS)
-    message("Enabled docs")
+    message("Enabled doc generation")
     include(FindDoxygen)
-    set(DOXYGEN_OUTPUT_DIRECTORY docs)
+    set(DOXYGEN_QUIET YES)
+    set(DOXYGEN_WARNINGS NO)
+    set(DOXYGEN_WARN_IF_UNDOCUMENTED NO)
+    set(DOXYGEN_WARN_IF_DOC_ERROR NO)
+    set(DOXYGEN_WARN_IF_INCOMPLETE_DOC NO)
+    set(DOXYGEN_OUTPUT_DIRECTORY doc)
     set(DOXYGEN_GENERATE_HTML YES)
     set(DOXYGEN_HTML_OUTPUT api)
     # no example documentation, but adding anyway
@@ -56,8 +61,8 @@ if (WITH_DOCS)
     set(DOXYGEN_EXAMPLE_PATTERNS "*.cpp *.c *.h")
     doxygen_add_docs(apidocs src/
         include/id3/field.h
-        include/id3/frame.h
         include/id3/globals.h
+        include/id3/helpers.h
         include/id3/misc_support.h
         include/id3/reader.h
         include/id3/readers.h
@@ -68,15 +73,18 @@ if (WITH_DOCS)
         ALL)
 
     set(DOX_DIR_HTML api)
-    configure_file(doc/index.html.in ${CMAKE_BINARY_DIR}/docs/index.html)
-    file(COPY doc/ DESTINATION ${CMAKE_BINARY_DIR}/docs FILES_MATCHING PATTERN *.gif)
-    file(COPY doc/ DESTINATION ${CMAKE_BINARY_DIR}/docs FILES_MATCHING PATTERN id3lib*php )
-    file(COPY doc/ DESTINATION ${CMAKE_BINARY_DIR}/docs FILES_MATCHING PATTERN id3lib*doc )
-    file(COPY doc/man DESTINATION ${CMAKE_BINARY_DIR}/docs FILES_MATCHING PATTERN *.1)
+    configure_file(doc/index.html.in ${CMAKE_BINARY_DIR}/doc/index.html)
+    file(COPY doc/ DESTINATION ${CMAKE_BINARY_DIR}/doc FILES_MATCHING PATTERN *.gif)
+    file(COPY doc/ DESTINATION ${CMAKE_BINARY_DIR}/doc FILES_MATCHING PATTERN id3lib*php )
+    file(COPY doc/ DESTINATION ${CMAKE_BINARY_DIR}/doc FILES_MATCHING PATTERN id3lib*doc )
+    file(COPY doc/man DESTINATION ${CMAKE_BINARY_DIR}/doc FILES_MATCHING PATTERN *.1)
+    install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/api/
+        DESTINATION share/doc/${CMAKE_PROJECT_NAME}-doc
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 endif()
 
 # WITH_DOCS or not, install manpages
-install(DIRECTORY "doc/man/" DESTINATION "share/man/man1"
+install(DIRECTORY doc/man/ DESTINATION "share/man/man1"
         FILE_PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
         PATTERN *.1)
 

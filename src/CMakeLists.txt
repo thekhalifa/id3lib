@@ -39,4 +39,11 @@ set(ID3LIB_SOURCES
 add_library(id3 SHARED ${ID3LIB_SOURCES})
 target_link_libraries(id3 PRIVATE ${zlib_LINK_LIBRARIES})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set_property(TARGET id3 PROPERTY SOVERSION ${CMAKE_PROJECT_VERSION})
 install(TARGETS id3 LIBRARY)
+
+configure_file(${CMAKE_SOURCE_DIR}/id3lib.pc.in
+    ${CMAKE_BINARY_DIR}/id3lib.pc @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/id3lib.pc
+    DESTINATION share/pkgconfig
+    PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
